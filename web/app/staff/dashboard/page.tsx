@@ -71,6 +71,12 @@ export default function StaffDashboard() {
                                         </p>
                                     </div>
                                 </div>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-600">{complaint.description}</p>
+                                </div>
+                                <div className="mt-2 text-sm text-gray-500">
+                                    Contact: <span className="font-semibold text-gray-900">{complaint.contactPhone || complaint.userId?.phone || 'N/A'}</span>
+                                </div>
                                 <div className="mt-4 flex gap-2">
                                     {complaint.status === 'pending' && (
                                         <Button

@@ -17,6 +17,7 @@ export async function GET(request: Request) {
 
         return NextResponse.json({ complaints });
     } catch (error: any) {
+        console.error("API Error (/api/complaints/user):", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

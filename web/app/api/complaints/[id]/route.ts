@@ -6,7 +6,7 @@ import connectDB from '@/lib/mongodb';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectDB();
@@ -16,12 +16,19 @@ export async function PATCH(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { id } = params;
+        const { id } = await params;
+
+        console.log(`[PATCH] Updating complaint: ${id}`);
         const data = await request.json();
+
+        console.log(`[PATCH] Updating complaint: ${id}, Status: ${data.status}`);
 
         // Check permissions
         const complaint = await Complaint.findById(id);
+        console.log(`[PATCH] Found complaint?`, !!complaint);
+
         if (!complaint) {
+            console.log(`[PATCH] Complaint not found for ID: ${id}`);
             return NextResponse.json({ error: 'Complaint not found' }, { status: 404 });
         }
 
@@ -56,11 +63,11 @@ export async function PATCH(
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectDB();
-        const { id } = params;
+        const { id } = await params;
         const complaint = await Complaint.findById(id).populate('userId', 'name erpId').populate('assignedTo', 'name');
 
         if (!complaint) {

@@ -18,6 +18,7 @@ const formSchema = z.object({
     preferredTime: z.object({
         slot: z.enum(['morning', 'afternoon', 'evening', 'anytime']),
     }),
+    contactPhone: z.string().min(10, 'Valid phone number required'),
     images: z.array(z.string()).optional()
 });
 
@@ -97,6 +98,15 @@ export default function NewComplaintPage() {
                     {...register('description')}
                     error={errors.description?.message}
                     placeholder="Detailed description of the problem..."
+                />
+
+                {/* Added Contact Number Field */}
+                <Input
+                    label="Contact Number"
+                    {...register('contactPhone')}
+                    // @ts-ignore
+                    error={errors.contactPhone?.message}
+                    placeholder="Your mobile number"
                 />
 
                 <div>

@@ -31,7 +31,15 @@ export default function LoginPage() {
 
                 // Since we can't easily get the session here without a hook, we'll let the middleware or subsequent page handle it
                 // But purely for prototype, let's guess mostly student
-                router.push('/student/dashboard');
+                // Determine redirection based on role
+                if (erpId.toUpperCase().startsWith('STAFF')) {
+                    router.push('/staff/dashboard');
+                } else if (erpId.toUpperCase().startsWith('ADMIN')) {
+                    // Redirect admin to staff dashboard for now as admin view is minimal
+                    router.push('/staff/dashboard');
+                } else {
+                    router.push('/student/dashboard');
+                }
                 router.refresh();
             }
         } catch (err) {

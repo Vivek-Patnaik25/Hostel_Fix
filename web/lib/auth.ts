@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                console.log("Authorize called with:", credentials?.erpId);
                 if (!credentials?.erpId || !credentials?.password) return null;
 
                 // Mock ERP Validation Logic

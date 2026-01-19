@@ -22,7 +22,13 @@ export default function StudentDashboard() {
     });
 
     if (isLoading) return <div className="p-4">Loading complaints...</div>;
-    if (error) return <div className="p-4 text-red-500">Error loading complaints</div>;
+    if (error) return (
+        <div className="p-4 bg-red-50 text-red-500 rounded border border-red-200">
+            Error loading complaints: {error.message}
+            <br />
+            Try refreshing the page or checking the console.
+        </div>
+    );
 
     const complaints = data?.complaints || [];
 

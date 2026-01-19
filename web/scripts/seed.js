@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
-const { v4: uuidv4 } = require('uuid');
 require('dotenv').config({ path: './.env.local' });
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -10,7 +9,7 @@ if (!MONGODB_URI) {
     process.exit(1);
 }
 
-// Simple schemas for seeding
+// User Schema
 const UserSchema = new mongoose.Schema({
     erpId: { type: String, unique: true },
     name: String,
@@ -20,6 +19,7 @@ const UserSchema = new mongoose.Schema({
     roomNo: String,
 });
 
+// Complaint Schema with explicit collection
 const ComplaintSchema = new mongoose.Schema({
     ticketId: String,
     userId: mongoose.Schema.Types.ObjectId,
@@ -31,7 +31,7 @@ const ComplaintSchema = new mongoose.Schema({
     status: String,
     priority: String,
     createdAt: Date
-});
+}, { collection: 'Repmaintain' });
 
 const User = mongoose.model('User', UserSchema);
 const Complaint = mongoose.model('Complaint', ComplaintSchema);
@@ -43,7 +43,7 @@ async function seed() {
 
         // Clear existing data
         await User.deleteMany({});
-        await Complaint.deleteMany({});
+        await Complaint.deleteMany({}); // This will now delete from 'Repmaintain'
 
         console.log('Cleared existing data');
 
@@ -103,7 +103,7 @@ async function seed() {
             });
         }
 
-        console.log('Created Complaints');
+        console.log('Created Complaints in Repmaintain');
         console.log('Seeding complete!');
         process.exit(0);
 

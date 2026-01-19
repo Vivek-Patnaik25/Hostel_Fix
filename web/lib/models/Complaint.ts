@@ -13,6 +13,7 @@ const ComplaintSchema = new mongoose.Schema({
     description: String,
     roomNo: String,
     hostelNo: String,
+    contactPhone: String,
     images: [String],
     preferredTime: {
         slot: { type: String, enum: ['morning', 'afternoon', 'evening', 'anytime'] },
@@ -45,6 +46,6 @@ const ComplaintSchema = new mongoose.Schema({
     },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
-});
+}, { collection: 'Repmaintain' });
 
 export default mongoose.models.Complaint || mongoose.model('Complaint', ComplaintSchema);

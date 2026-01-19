@@ -29,6 +29,7 @@ export async function POST(request: Request) {
             description: data.description,
             roomNo: session.user.roomNo,
             hostelNo: session.user.hostelNo,
+            contactPhone: data.contactPhone,
             images: data.images || [],
             preferredTime: data.preferredTime,
             priority,
@@ -69,7 +70,7 @@ export async function GET(request: Request) {
 
         const complaints = await Complaint.find(filter)
             .sort({ createdAt: -1 })
-            .populate('userId', 'name roomNo hostelNo');
+            .populate('userId', 'name roomNo hostelNo phone email');
 
         return NextResponse.json({ complaints });
 
