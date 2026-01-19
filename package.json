@@ -1,0 +1,13 @@
+{
+  "name": "hostel-fix-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "web",
+    "socket-server"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces"
+  }
+}
